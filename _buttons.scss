@@ -1,0 +1,27 @@
+@use '../abstracts/variables' as v;
+
+.btn {
+  min-height: 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-weight: 750;
+  font-size: 13px;
+  background: v.$surface;
+  color: v.$text;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.btn:active { transform: scale(.99); }
+.btn--primary { background: v.$primary; color: v.$primary-contrast; border-color: v.$primary; }
+.btn--secondary { background: v.$surface; border-color: v.$border; }
+.btn--danger { background: transparent; color: v.$danger; border-color: v.$danger; }
+.btn--full { width: 100%; }
+.text-action {
+  min-height: 44px; border: 0; background: transparent; color: v.$text; padding: 7px 0; font-size: 12px; font-weight: 750; white-space: nowrap;
+}
+.danger-link {
+  border: 0; background: transparent; color: v.$danger; min-height: 44px; padding: 8px; font-size: 12px; font-weight: 750; text-align: center;
+}
