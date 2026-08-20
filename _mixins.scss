@@ -1,0 +1,20 @@
+@use 'variables' as v;
+
+@mixin tap-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@mixin surface {
+  background: v.$surface;
+  border: 1px solid v.$border;
+  border-radius: v.$radius-md;
+}
+
+@mixin section-label {
+  color: v.$text-soft;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
