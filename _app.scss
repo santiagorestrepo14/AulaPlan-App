@@ -1,0 +1,109 @@
+@use '../abstracts/variables' as v;
+
+#app {
+  width: min(100%, v.$app-width);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: v.$bg-app;
+  color: v.$text;
+  border: 0;
+  overflow-x: clip;
+  position: relative;
+}
+.app-shell { width: min(100%, v.$app-width); min-height: 100vh; min-height: 100dvh; position: relative; background: v.$bg-app; color: v.$text; }
+.screen { padding: max(20px, env(safe-area-inset-top)) 16px 28px; }
+.screen--with-nav { padding-bottom: 106px; }
+.stack { display: grid; gap: 14px; }.stack--sm { gap: 10px; }.stack--xs { gap: 7px; }
+.title-action-row { min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.title-action-row h1 { margin: 0; }
+.title-action-row--plain { justify-content: flex-start; }
+
+.home-hero { margin-bottom: 18px; }
+.home-hero h1 { margin-bottom: 2px; }
+.home-hero p { margin: 0; color: v.$text-soft; font-size: 10px; text-transform: capitalize; }
+.home-primary-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.home-section { margin-top: 18px; }
+.home-section h2 { margin-bottom: 10px; }
+.mini-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.event-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+.event-grid > .empty-copy { grid-column: 1 / -1; }
+.subject-list { margin-top: 4px; }
+.activity-list { margin-top: 4px; }
+
+.form-screen { padding-top: max(12px, env(safe-area-inset-top)); }
+.detail-screen { padding-top: max(12px, env(safe-area-inset-top)); }
+.detail-section { margin-top: 18px; }
+.detail-section h2 { margin-bottom: 9px; }
+.detail-section__label { color: v.$text-soft; font-size: 10px; letter-spacing: .03em; }
+.section-title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.section-title-row h2 { margin: 0; }
+.activity-actions { display: grid; gap: 9px; margin-top: 18px; }
+
+.calendar-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.calendar-title-row h1 { font-size: 21px; }
+.calendar-month-controls { display: flex; gap: 6px; }
+.month-calendar { border: 1px solid v.$border; border-radius: 12px; background: v.$surface; padding: 9px 10px 10px; }
+.month-calendar__weekdays { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 3px; }
+.month-calendar__weekdays span { color: v.$text-soft; font-size: 9px; font-weight: 700; text-align: center; }
+.month-calendar__grid { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 2px; }
+.month-day { min-width: 0; height: 36px; border: 0; background: transparent; color: v.$text; border-radius: 50%; display: grid; justify-items: center; align-content: center; gap: 1px; padding: 1px; }
+.month-day > span { width: 30px; height: 28px; display: grid; place-items: center; border-radius: 50%; font-size: 11px; }
+.month-day.is-outside { color: v.$text-soft; opacity: .38; }
+.month-day.is-today:not(.is-selected) > span { box-shadow: inset 0 0 0 1px v.$border-strong; }
+.month-day.is-selected > span { background: v.$primary; color: v.$primary-contrast; font-weight: 800; }
+.month-day__dots { height: 7px; display: flex; align-items: center; justify-content: center; gap: 2px; }
+.month-day__dots .priority-dot { width: 4px; height: 4px; flex-basis: 4px; }
+.agenda-section { margin-top: 16px; }
+.agenda-section h2 { color: v.$text-soft; font-size: 10px; margin-bottom: 9px; letter-spacing: .02em; }
+.agenda-row { width: 100%; min-height: 59px; border: 1px solid v.$border; border-radius: 10px; background: v.$surface; color: v.$text; display: grid; grid-template-columns: 9px 1fr; align-items: center; gap: 10px; padding: 10px 12px; text-align: left; }
+.agenda-row__body { min-width: 0; display: grid; gap: 5px; }.agenda-row__body strong { font-size: 12px; }.agenda-row__body > span { color: v.$text-soft; font-size: 9px; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.agenda-row .meta-icon { width: 12px; height: 12px; }
+
+.settings-screen > h1 { margin: 0 0 14px; }
+.account-note { border: 1px solid v.$border; border-radius: 12px; background: v.$surface-soft; padding: 13px; margin-bottom: 20px; }
+.account-note strong { font-size: 12px; }.account-note p { margin: 4px 0 0; color: v.$text-soft; font-size: 10px; line-height: 1.45; }
+.settings-group { margin-top: 19px; }
+.settings-group > h2 { margin: 0; padding: 0 0 6px; border-bottom: 1px solid v.$border; color: v.$text-soft; font-size: 9px; letter-spacing: .08em; }
+.settings-row { position: relative; width: 100%; min-height: 44px; border: 0; border-bottom: 1px solid transparent; background: transparent; color: v.$text; display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 7px; padding: 8px 0; text-align: left; }
+.settings-row__icon { width: 18px; height: 18px; display: grid; place-items: center; }.settings-row__icon .ui-icon { width: 18px; height: 18px; }
+.settings-row__body { min-width: 0; display: grid; gap: 2px; }.settings-row__body strong { font-size: 12px; font-weight: 650; }.settings-row__body small { color: v.$text-soft; font-size: 9px; }.settings-row__value { color: v.$text-soft; font-size: 10px; }
+.settings-row__chevron { color: v.$text-soft; }.settings-row__chevron .ui-icon { width: 17px; height: 17px; }
+.settings-row--switch { grid-template-columns: 22px 1fr 42px; cursor: pointer; }
+.settings-row--select { grid-template-columns: 22px 1fr auto; }
+.settings-row--select select { min-height: 40px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface; color: v.$text; padding: 7px 28px 7px 9px; font-size: 11px; }
+.settings-row--danger, .settings-row--danger .settings-row__icon { color: v.$danger; }
+.settings-row--file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.settings-form { display: grid; gap: 12px; padding-top: 12px; }
+.settings-field { display: grid; gap: 6px; color: v.$text-soft; font-size: 10px; font-weight: 700; }
+.settings-field input, .settings-field select { width: 100%; min-height: 44px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface; color: v.$text; padding: 9px 10px; font-size: 12px; font-weight: 400; }
+.settings-row--in-form { padding: 2px 0; }
+.storage-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 4px; }
+.storage-summary span { min-height: 44px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface-soft; color: v.$text-soft; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 10px; }
+.storage-summary strong { color: v.$text; font-size: 15px; }
+
+.settings-dialog { width: min(356px, calc(100% - 28px)); max-height: min(720px, calc(100dvh - 32px)); border: 1px solid v.$border; border-radius: 14px; background: v.$surface; color: v.$text; padding: 18px; box-shadow: v.$shadow; }
+.settings-dialog::backdrop { background: rgba(0, 0, 0, .52); }
+.settings-dialog__header { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid v.$border; padding-bottom: 8px; }
+.settings-dialog__header h2 { margin: 0; font-size: 17px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(94px + env(safe-area-inset-bottom)); transform: translate(-50%, 10px); z-index: 99; width: min(334px, calc(100% - 44px)); background: v.$primary; color: v.$primary-contrast; border-radius: 10px; padding: 10px 12px; opacity: 0; transition: .2s ease; pointer-events: none; box-shadow: v.$shadow; font-size: 12px; text-align: center; }
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+.confirm-dialog { width: min(344px, calc(100% - 32px)); border: 1px solid v.$border; border-radius: 14px; background: v.$surface; color: v.$text; padding: 20px; box-shadow: v.$shadow; }
+.confirm-dialog::backdrop { background: rgba(0, 0, 0, .52); }
+.confirm-dialog h2 { margin-bottom: 8px; font-size: 17px; }
+.confirm-dialog p { margin: 0; color: v.$text-soft; font-size: 12px; line-height: 1.5; }
+.confirm-dialog__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 18px; }
+
+@media (min-width: 480px) {
+  body { padding: 18px 0; }
+  #app { min-height: 844px; border: 1px solid v.$border-strong; border-radius: 28px; box-shadow: v.$shadow; }
+  .app-shell { min-height: 842px; }
+}
+@media (max-width: 370px) {
+  .screen { padding-left: 14px; padding-right: 14px; }
+  .event-grid { grid-template-columns: 1fr; }
+  .filters { grid-template-columns: 1fr; }
+  .priority-choice { grid-template-columns: 1fr; }
+}
