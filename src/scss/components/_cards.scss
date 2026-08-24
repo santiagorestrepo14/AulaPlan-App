@@ -1,0 +1,64 @@
+@use '../abstracts/variables' as v;
+
+.priority-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: 0 0 8px; }
+.priority-dot--alta { background: v.$priority-high; }
+.priority-dot--media { background: v.$priority-medium; }
+.priority-dot--baja { background: v.$priority-low; }
+.priority-dot--completed { background: v.$text-soft; }
+.subject-color-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--subject-color); flex: 0 0 8px; }
+
+.subject-card {
+  width: 100%; min-height: 91px; border: 1px solid v.$border; border-radius: 12px; background: v.$surface; color: v.$text;
+  display: grid; grid-template-columns: 5px 1fr 20px; gap: 12px; align-items: stretch; padding: 0 12px 0 0; text-align: left; overflow: hidden;
+}
+.subject-card__accent { background: var(--subject-color); width: 5px; height: 100%; }
+.subject-card__body { min-width: 0; padding: 12px 0; display: grid; align-content: center; gap: 5px; }
+.subject-card__body strong { font-size: 15px; }
+.subject-card__line { color: v.$text-soft; font-size: 11px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.subject-card__sep { display: inline-flex; align-items: center; gap: 4px; }
+.subject-card__chevron, .activity-card__chevron { display: grid; place-items: center; color: v.$text-soft; }
+.subject-card__chevron .ui-icon, .activity-card__chevron .ui-icon { width: 18px; height: 18px; }
+
+.activity-card {
+  width: 100%; min-height: 69px; border: 1px solid v.$border; border-radius: 12px; background: v.$surface; color: v.$text;
+  display: grid; grid-template-columns: 10px 1fr 20px; gap: 10px; align-items: center; padding: 10px 12px; text-align: left;
+}
+.activity-card__body { min-width: 0; display: grid; gap: 5px; }
+.activity-card__body strong { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.activity-card__meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; color: v.$text-soft; font-size: 10px; }
+.subject-tag { display: inline-flex; align-items: center; min-height: 18px; border-radius: 4px; padding: 2px 6px; background: v.$surface-soft; color: v.$text-soft; font-size: 9px; font-weight: 700; }
+.meta-clock { display: inline-flex; gap: 4px; align-items: center; }
+.meta-clock .ui-icon { width: 13px; height: 13px; }
+
+.empty-state { padding: 18px; border: 1px dashed v.$border; border-radius: 12px; background: v.$surface; }
+.empty-state h3 { margin-bottom: 5px; }
+.empty-state p { color: v.$text-soft; margin-bottom: 12px; }
+
+.big-stat { min-height: 93px; padding: 14px; border: 1px solid v.$border; border-radius: 12px; background: v.$surface; }
+.big-stat > span { color: v.$text-soft; font-size: 10px; font-weight: 800; }
+.big-stat > div { margin-top: 8px; display: flex; align-items: baseline; gap: 7px; }
+.big-stat strong { font-size: 29px; line-height: 1; }
+.big-stat small { color: v.$text-soft; font-size: 12px; }
+.mini-stat-grid article { min-height: 64px; padding: 10px 11px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface; }
+.mini-stat-grid strong { display: block; font-size: 19px; margin-bottom: 4px; }
+.mini-stat-grid span { color: v.$text-soft; font-size: 9px; }
+.mini-stat--danger strong, .mini-stat--danger span { color: v.$danger; }
+.event-card { position: relative; min-height: 78px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface; color: v.$text; text-align: left; padding: 10px 11px; display: grid; gap: 4px; }
+.event-card__dot { position: absolute; right: 10px; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--event-color); }
+.event-card__dot--alta { background: v.$priority-high; }.event-card__dot--media { background: v.$priority-medium; }.event-card__dot--baja { background: v.$priority-low; }
+.event-card small { color: v.$text-soft; font-size: 10px; }.event-card strong { font-size: 12px; padding-right: 10px; }.event-card span { color: v.$text-soft; font-size: 10px; overflow-wrap: anywhere; }
+
+.subject-detail-card, .activity-detail-card { border: 1px solid v.$border; border-radius: 12px; background: v.$surface; padding: 15px; }
+.subject-detail-card { border-left: 4px solid var(--subject-color); }
+.subject-detail-card h1, .activity-detail-card__title { color: v.$text; font-size: 19px; line-height: 1.2; margin: 0 0 10px; }
+.subject-detail-card p, .activity-detail-card p { margin: 7px 0 0; color: v.$text-soft; font-size: 11px; display: flex; align-items: center; gap: 7px; }
+.divider { height: 1px; background: v.$border; margin: 8px 0 10px; }
+.subject-activity-row { width: 100%; min-height: 48px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface; color: v.$text; display: grid; grid-template-columns: 10px 1fr auto; gap: 7px; align-items: center; padding: 8px 10px; text-align: left; }
+.subject-activity-row__body { min-width: 0; display: grid; gap: 2px; }.subject-activity-row strong { font-size: 11px; }.subject-activity-row small { color: v.$text-soft; font-size: 9px; font-weight: 500; }.subject-activity-row > span:last-child { color: v.$text-soft; font-size: 10px; }
+.notes-card { min-height: 78px; padding: 13px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface-soft; color: v.$text-soft; font-size: 11px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.activity-detail-card__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.priority-badge { min-height: 20px; border-radius: 4px; padding: 3px 7px; display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 750; }
+.priority-badge i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.priority-badge--alta { color: v.$priority-high; background: v.$priority-high-soft; }.priority-badge--media { color: v.$priority-medium; background: v.$priority-medium-soft; }.priority-badge--baja { color: v.$priority-low; background: v.$priority-low-soft; }
+.status-line { color: v.$text !important; font-weight: 700; }.status-line--danger { color: v.$danger !important; }

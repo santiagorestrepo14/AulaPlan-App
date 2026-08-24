@@ -1,0 +1,12 @@
+{
+  "name": "AulaPlan",
+  "short_name": "AulaPlan",
+  "description": "Organizador académico local y sin conexión.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F7F7F5",
+  "theme_color": "#171717",
+  "icons": [
+    { "src": "./aulaplan-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
