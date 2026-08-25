@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { renderInicio } from '../src/js/views/inicio.js';
-import { renderMaterias, renderMateriaForm, renderMateriaDetalle } from '../src/js/views/materias.js';
+import { renderMaterias, renderMateriaForm, renderMateriaDetalle, findScheduleConflicts } from '../src/js/views/materias.js';
 import { renderActividades, renderActividadForm, renderActividadDetalle } from '../src/js/views/actividades.js';
 import { renderCalendario } from '../src/js/views/calendario.js';
 import { renderConfiguracion } from '../src/js/views/configuracion.js';
@@ -113,4 +113,61 @@ test('contenido ingresado por el usuario se escapa antes de entrar al HTML', () 
   assert.match(rendered, /Diseño &lt;UX&gt;/);
   assert.match(rendered, /Entrega &lt;final&gt;/);
   assert.doesNotMatch(rendered, /Diseño <UX>|Entrega <final>/);
+});
+
+test('inicio conserva el nombre completo del usuario con espacios', () => {
+  const customState = {
+    ...state,
+    preferencias: {
+      ...state.preferencias,
+      nombreUsuario: 'Alejandro Restrepo',
+    },
+  };
+
+  const html = renderInicio(customState);
+
+  assert.match(html, /Hola, Alejandro Restrepo/);
+  assert.doesNotMatch(html, /Hola, Alejandro<\/h1>/);
+});
+
+test('detecta cruces de horario pero permite clases consecutivas', () => {
+  const materias = [{
+    id: 'mat-base',
+    nombre: 'Cálculo',
+    dias: ['Lun', 'Mié'],
+    horaInicio: '08:00',
+    horaFin: '10:00',
+  }];
+
+  const overlapping = findScheduleConflicts(materias, {
+    id: 'mat-nueva',
+    nombre: 'Física',
+    dias: ['Lun'],
+    horaInicio: '09:00',
+    horaFin: '11:00',
+  });
+
+  assert.equal(overlapping.length, 1);
+  assert.equal(overlapping[0].materia.nombre, 'Cálculo');
+  assert.deepEqual(overlapping[0].dias, ['Lun']);
+
+  const consecutive = findScheduleConflicts(materias, {
+    id: 'mat-nueva',
+    nombre: 'Física',
+    dias: ['Lun'],
+    horaInicio: '10:00',
+    horaFin: '12:00',
+  });
+
+  assert.equal(consecutive.length, 0);
+
+  const differentDay = findScheduleConflicts(materias, {
+    id: 'mat-nueva',
+    nombre: 'Física',
+    dias: ['Mar'],
+    horaInicio: '09:00',
+    horaFin: '11:00',
+  });
+
+  assert.equal(differentDay.length, 0);
 });

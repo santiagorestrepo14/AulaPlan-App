@@ -17,7 +17,9 @@ export function renderInicio(state) {
   const currentDay = dayCode(new Date());
   const todayClasses = state.materias.filter(m => (m.dias || []).includes(currentDay)).sort((a,b) => (a.horaInicio || '').localeCompare(b.horaInicio || ''));
   const configuredName = state.preferencias.nombreUsuario?.trim();
-  const firstName = configuredName ? configuredName.split(/\s+/)[0] : 'estudiante';
+  const displayName = configuredName
+    ? configuredName.replace(/\s+/g, ' ')
+    : 'estudiante';
   const materiaById = Object.fromEntries(state.materias.map(m => [m.id, m]));
   const eventCards = [];
   todayClasses.slice(0, 2).forEach(nextClass => {
@@ -44,7 +46,7 @@ export function renderInicio(state) {
     <div class="app-shell">
       <main class="screen screen--with-nav home-screen">
         <header class="home-hero">
-          <h1>Hola, ${escapeHtml(firstName)}</h1>
+          <h1>Hola, ${escapeHtml(displayName)}</h1>
           <p>${new Intl.DateTimeFormat('es-CO', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}</p>
         </header>
 

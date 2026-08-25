@@ -26,7 +26,11 @@
 .home-section { margin-top: 18px; }
 .home-section h2 { margin-bottom: 10px; }
 .mini-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.event-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+.event-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
 .event-grid > .empty-copy { grid-column: 1 / -1; }
 .subject-list { margin-top: 4px; }
 .activity-list { margin-top: 4px; }
@@ -56,9 +60,51 @@
 .month-day__dots .priority-dot { width: 4px; height: 4px; flex-basis: 4px; }
 .agenda-section { margin-top: 16px; }
 .agenda-section h2 { color: v.$text-soft; font-size: 10px; margin-bottom: 9px; letter-spacing: .02em; }
-.agenda-row { width: 100%; min-height: 59px; border: 1px solid v.$border; border-radius: 10px; background: v.$surface; color: v.$text; display: grid; grid-template-columns: 9px 1fr; align-items: center; gap: 10px; padding: 10px 12px; text-align: left; }
-.agenda-row__body { min-width: 0; display: grid; gap: 5px; }.agenda-row__body strong { font-size: 12px; }.agenda-row__body > span { color: v.$text-soft; font-size: 9px; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-.agenda-row .meta-icon { width: 12px; height: 12px; }
+.agenda-row {
+  width: 100%;
+  min-height: 91px;
+  border: 1px solid v.$border;
+  border-radius: 12px;
+  background: v.$surface;
+  color: v.$text;
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.agenda-row__body {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.agenda-row__body strong {
+  font-size: 14px;
+}
+
+.agenda-row__body > span {
+  color: v.$text-soft;
+  font-size: 11px;
+  line-height: 1.35;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.agenda-row .meta-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.agenda-row .subject-tag {
+  min-height: 20px;
+  padding: 3px 7px;
+  font-size: 10px;
+}
 
 .settings-screen > h1 { margin: 0 0 14px; }
 .account-note { border: 1px solid v.$border; border-radius: 12px; background: v.$surface-soft; padding: 13px; margin-bottom: 20px; }

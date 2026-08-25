@@ -43,10 +43,59 @@
 .mini-stat-grid strong { display: block; font-size: 19px; margin-bottom: 4px; }
 .mini-stat-grid span { color: v.$text-soft; font-size: 9px; }
 .mini-stat--danger strong, .mini-stat--danger span { color: v.$danger; }
-.event-card { position: relative; min-height: 78px; border: 1px solid v.$border; border-radius: 8px; background: v.$surface; color: v.$text; text-align: left; padding: 10px 11px; display: grid; gap: 4px; }
-.event-card__dot { position: absolute; right: 10px; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--event-color); }
-.event-card__dot--alta { background: v.$priority-high; }.event-card__dot--media { background: v.$priority-medium; }.event-card__dot--baja { background: v.$priority-low; }
-.event-card small { color: v.$text-soft; font-size: 10px; }.event-card strong { font-size: 12px; padding-right: 10px; }.event-card span { color: v.$text-soft; font-size: 10px; overflow-wrap: anywhere; }
+.event-card {
+  position: relative;
+  width: 100%;
+  min-height: 91px;
+  border: 1px solid v.$border;
+  border-radius: 12px;
+  background: v.$surface;
+  color: v.$text;
+  text-align: left;
+  padding: 12px 14px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+}
+
+.event-card__dot {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--event-color);
+}
+
+.event-card__dot--alta {
+  background: v.$priority-high;
+}
+
+.event-card__dot--media {
+  background: v.$priority-medium;
+}
+
+.event-card__dot--baja {
+  background: v.$priority-low;
+}
+
+.event-card small {
+  color: v.$text-soft;
+  font-size: 11px;
+}
+
+.event-card strong {
+  font-size: 14px;
+  padding-right: 18px;
+}
+
+.event-card span {
+  color: v.$text-soft;
+  font-size: 11px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
 
 .subject-detail-card, .activity-detail-card { border: 1px solid v.$border; border-radius: 12px; background: v.$surface; padding: 15px; }
 .subject-detail-card { border-left: 4px solid var(--subject-color); }

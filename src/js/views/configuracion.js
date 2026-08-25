@@ -81,7 +81,10 @@ export function bindConfiguracion(root, state, persist, replaceState) {
   root.querySelector('#preferences-form')?.addEventListener('submit', event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    state.preferencias.nombreUsuario = String(data.get('nombreUsuario') || '').trim().slice(0, 40);
+    state.preferencias.nombreUsuario = String(data.get('nombreUsuario') || '')
+      .trim()
+      .replace(/\s+/g, ' ')
+      .slice(0, 40);
     state.preferencias.vistaInicial = String(data.get('vistaInicial') || 'inicio');
     state.preferencias.criterioOrden = String(data.get('criterioOrden') || 'fecha');
     state.preferencias.tema = String(data.get('tema') || 'system');

@@ -11,6 +11,34 @@ function scheduleText(materia) {
   return `${days} ${time}`;
 }
 
+function sharedScheduleDays(a, b) {
+  const otherDays = new Set(b.dias || []);
+  return (a.dias || []).filter(day => otherDays.has(day));
+}
+
+function timesOverlap(startA, endA, startB, endB) {
+  if (!startA || !endA || !startB || !endB) return false;
+  return startA < endB && startB < endA;
+}
+
+export function findScheduleConflicts(materias, candidate, excludeId = '') {
+  return materias
+    .filter(materia => materia.id !== excludeId)
+    .map(materia => ({
+      materia,
+      dias: sharedScheduleDays(candidate, materia),
+    }))
+    .filter(({ materia, dias }) =>
+      dias.length > 0 &&
+      timesOverlap(
+        candidate.horaInicio,
+        candidate.horaFin,
+        materia.horaInicio,
+        materia.horaFin,
+      )
+    );
+}
+
 export function renderMaterias(state) {
   return `
     <div class="app-shell">
@@ -86,7 +114,7 @@ const days = ['Lun','Mar','Mié','Jue','Vie','Sáb'];
 
 export function bindMateriaForm(root, state, params, persist, back) {
   const id = params.get('id');
-  root.querySelector('#subject-form')?.addEventListener('submit', event => {
+  root.querySelector('#subject-form')?.addEventListener('submit', async event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const nombre = String(data.get('nombre') || '').trim();
@@ -110,6 +138,26 @@ export function bindMateriaForm(root, state, params, persist, back) {
       notas: String(data.get('notas') || '').trim(),
       fechaCreacion: previous?.fechaCreacion || new Date().toISOString(),
     };
+
+    const conflicts = findScheduleConflicts(state.materias, model, id);
+
+    if (conflicts.length) {
+      const conflictSummary = conflicts
+        .map(({ materia, dias }) =>
+          `${materia.nombre} (${dias.join('/')} ${materia.horaInicio} - ${materia.horaFin})`
+        )
+        .join('\n• ');
+
+      const keepSchedule = window.confirm(
+        `Advertencia: este horario se cruza con:\n\n• ${conflictSummary}\n\n¿Deseas guardar la materia de todas formas?`
+      );
+
+      if (!keepSchedule) {
+        toast('No se guardó la materia. Ajusta el horario para evitar el cruce.');
+        return;
+      }
+    }
+
     if (id) state.materias[state.materias.findIndex(m => m.id === id)] = model;
     else state.materias.push(model);
     persist();
