@@ -136,13 +136,6 @@ El APK debug validado se genera en `android/app/build/outputs/apk/debug/app-debu
 └── vite.config.js
 ```
 
-## Pruebas y entrega
 
-- [Plan de pruebas funcionales](docs/PRUEBAS_FUNCIONALES.md)
-- [Prueba física de viewport](docs/PRUEBA_ANCHO_VIEWPORT.md)
-- [Matriz de rúbrica](docs/MATRIZ_RUBRICA.md)
-- [Resultado técnico de QA 0.3.0](docs/RESULTADO_QA_0.3.0.md)
-- [Guía Android](docs/GUIA_ANDROID.md)
-- [Flujo de sustentación](docs/FLUJO_SUSTENTACION.md)
 
 Las pruebas automatizadas no sustituyen las evidencias manuales de Android físico, funcionamiento offline, viewport ni comparación visual exacta con Figma. Tampoco se inventan commits, autores o resultados de pruebas no ejecutadas.
