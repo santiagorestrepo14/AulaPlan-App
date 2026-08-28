@@ -56,7 +56,7 @@ test('migra datos de la versión React anterior sin borrar sus claves', () => {
   assert.equal(state.actividades[0].prioridad, 'alta');
   assert.equal(state.preferencias.nombreUsuario, 'Vale');
   assert.equal(state.preferencias.criterioOrden, 'prioridad');
-  assert.ok(data.has('aulaplan_v5'));
+  assert.ok(data.has('aulaplan_v6'));
   assert.ok(data.has('aulaplan_usuario-1_subjects_v2'));
 });
 

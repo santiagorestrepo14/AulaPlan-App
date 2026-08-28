@@ -1,7 +1,7 @@
 import { isValidISODate, isValidTime, todayISO } from './utils.js';
 
-const ROOT_KEY = 'aulaplan_v5';
-const LEGACY_KEYS = ['aulaplan_v4', 'aulaplan_v3', 'aulaplan_v2', 'aulaplan_v1'];
+const ROOT_KEY = 'aulaplan_v6';
+const LEGACY_KEYS = ['aulaplan_v5', 'aulaplan_v4', 'aulaplan_v3', 'aulaplan_v2', 'aulaplan_v1'];
 const VALID_PRIORITIES = new Set(['alta', 'media', 'baja']);
 const VALID_TYPES = new Set(['tarea', 'proyecto', 'examen', 'exposicion', 'evaluacion', 'entrega', 'otra']);
 const VALID_ORDERS = new Set(['fecha', 'prioridad', 'materia']);
@@ -10,7 +10,20 @@ const VALID_THEMES = new Set(['system', 'light', 'dark']);
 const VALID_DAYS = new Set(['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']);
 const VALID_SUBJECT_COLORS = new Set(['#2563EB', '#D97706', '#C2413B', '#7C3AED', '#10B981']);
 
+function defaultSemester() {
+  const now = new Date();
+  const period = now.getMonth() < 6 ? 1 : 2;
+  return {
+    id: `sem-${now.getFullYear()}-${period}`,
+    nombre: `${now.getFullYear()} - ${period}`,
+    fechaCreacion: now.toISOString(),
+  };
+}
+
+const initialSemester = defaultSemester();
+
 const initialState = {
+  semestres: [initialSemester],
   materias: [],
   actividades: [],
   preferencias: {
@@ -20,7 +33,8 @@ const initialState = {
     tema: 'system',
     temaColor: 'neutro',
     confirmaciones: true,
-    versionDatos: 5,
+    semestreActivoId: initialSemester.id,
+    versionDatos: 6,
   },
 };
 
@@ -38,11 +52,55 @@ function uniqueId(value, prefix, used) {
   return candidate;
 }
 
-function normalizeMateria(item = {}, index = 0, usedIds = new Set()) {
+function normalizeSemester(item = {}, usedIds = new Set()) {
+  return {
+    id: uniqueId(item.id, 'sem', usedIds),
+    nombre: text(item.nombre, 'Semestre sin nombre').replace(/\s+/g, ' ').slice(0, 40) || 'Semestre sin nombre',
+    fechaCreacion: text(item.fechaCreacion) || new Date().toISOString(),
+  };
+}
+
+function normalizeGrades(items = []) {
+  const usedIds = new Set();
+  const normalized = [];
+  let totalWeight = 0;
+
+  for (const item of Array.isArray(items) ? items : []) {
+    const porcentaje = Number(item?.porcentaje);
+    if (!Number.isFinite(porcentaje) || porcentaje <= 0 || porcentaje > 100) continue;
+    if (totalWeight + porcentaje > 100.0001) continue;
+
+    const rawGrade = item?.calificacion;
+    const calificacion = rawGrade === null || rawGrade === undefined || rawGrade === ''
+      ? null
+      : Number(rawGrade);
+
+    if (calificacion !== null && (!Number.isFinite(calificacion) || calificacion < 0 || calificacion > 5)) continue;
+
+    normalized.push({
+      id: uniqueId(item?.id, 'grade', usedIds),
+      nombre: text(item?.nombre, 'Evaluación').slice(0, 60) || 'Evaluación',
+      porcentaje,
+      calificacion,
+      fechaCreacion: text(item?.fechaCreacion) || new Date().toISOString(),
+    });
+
+    totalWeight += porcentaje;
+  }
+
+  return normalized;
+}
+
+function normalizeMateria(item = {}, index = 0, usedIds = new Set(), semesterIds = new Set(), fallbackSemesterId = '') {
   const palette = ['#2563EB', '#D97706', '#C2413B', '#7C3AED', '#10B981'];
   const incomingColor = text(item.color).toUpperCase();
+  const rawMinimum = item.notaMinima === null || item.notaMinima === undefined || item.notaMinima === ''
+    ? NaN
+    : Number(item.notaMinima);
+
   return {
     id: uniqueId(item.id, 'mat', usedIds),
+    semestreId: semesterIds.has(text(item.semestreId)) ? text(item.semestreId) : fallbackSemesterId,
     nombre: text(item.nombre, 'Materia sin nombre') || 'Materia sin nombre',
     docente: text(item.docente),
     dias: Array.isArray(item.dias) ? item.dias.map(String).filter(day => VALID_DAYS.has(day)) : [],
@@ -52,6 +110,8 @@ function normalizeMateria(item = {}, index = 0, usedIds = new Set()) {
     aula: text(item.aula),
     color: VALID_SUBJECT_COLORS.has(incomingColor) ? incomingColor : palette[index % palette.length],
     notas: text(item.notas),
+    notaMinima: Number.isFinite(rawMinimum) && rawMinimum >= 0 && rawMinimum <= 5 ? rawMinimum : 3,
+    calificaciones: normalizeGrades(item.calificaciones),
     fechaCreacion: text(item.fechaCreacion) || new Date().toISOString(),
   };
 }
@@ -77,16 +137,36 @@ function normalizeActividad(item = {}, materias = [], usedIds = new Set()) {
 function normalizeState(parsed = {}) {
   const base = cloneInitial();
   const preferencias = parsed?.preferencias ?? {};
+
+  const semesterIds = new Set();
+  let semestres = Array.isArray(parsed?.semestres)
+    ? parsed.semestres.map(item => normalizeSemester(item, semesterIds))
+    : [];
+
+  if (!semestres.length) {
+    semesterIds.clear();
+    semestres = base.semestres.map(item => normalizeSemester(item, semesterIds));
+  }
+
+  const requestedSemesterId = text(preferencias.semestreActivoId);
+  const activeSemesterId = semesterIds.has(requestedSemesterId)
+    ? requestedSemesterId
+    : semestres[0].id;
+
   const subjectIds = new Set();
   const activityIds = new Set();
+
   const materias = Array.isArray(parsed?.materias)
-    ? parsed.materias.map((item, index) => normalizeMateria(item, index, subjectIds))
+    ? parsed.materias.map((item, index) =>
+        normalizeMateria(item, index, subjectIds, semesterIds, activeSemesterId))
     : [];
+
   const actividades = Array.isArray(parsed?.actividades)
     ? parsed.actividades.map(item => normalizeActividad(item, materias, activityIds)).filter(item => item.materiaId)
     : [];
 
   return {
+    semestres,
     materias,
     actividades,
     preferencias: {
@@ -97,7 +177,8 @@ function normalizeState(parsed = {}) {
       tema: VALID_THEMES.has(preferencias.tema) ? preferencias.tema : 'system',
       temaColor: ['neutro', 'menta', 'azul'].includes(preferencias.temaColor) ? preferencias.temaColor : 'neutro',
       confirmaciones: preferencias.confirmaciones !== false,
-      versionDatos: 5,
+      semestreActivoId: activeSemesterId,
+      versionDatos: 6,
     },
   };
 }
@@ -202,14 +283,14 @@ export function loadState() {
   const normalized = findVersionedState() || migratePreviousAppState();
   if (!normalized) return cloneInitial();
   safeWrite(ROOT_KEY, JSON.stringify(normalized));
-  LEGACY_KEYS.forEach(safeRemove);
+  // Las claves anteriores se conservan como respaldo local de rollback.
   return normalized;
 }
 export function saveState(state) { safeWrite(ROOT_KEY, JSON.stringify(normalizeState(state))); }
 export function clearState() { safeRemove(ROOT_KEY); LEGACY_KEYS.forEach(safeRemove); }
 export function createEmptyState() { return cloneInitial(); }
 export function exportState(state) {
-  return JSON.stringify({ app: 'AulaPlan', schemaVersion: 5, exportedAt: new Date().toISOString(), data: normalizeState(state) }, null, 2);
+  return JSON.stringify({ app: 'AulaPlan', schemaVersion: 6, exportedAt: new Date().toISOString(), data: normalizeState(state) }, null, 2);
 }
 export function parseImportedState(value) {
   const parsed = JSON.parse(value);

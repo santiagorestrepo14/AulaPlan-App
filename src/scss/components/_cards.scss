@@ -111,3 +111,96 @@
 .priority-badge i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .priority-badge--alta { color: v.$priority-high; background: v.$priority-high-soft; }.priority-badge--media { color: v.$priority-medium; background: v.$priority-medium-soft; }.priority-badge--baja { color: v.$priority-low; background: v.$priority-low-soft; }
 .status-line { color: v.$text !important; font-weight: 700; }.status-line--danger { color: v.$danger !important; }
+
+/* Rendimiento académico y calificaciones */
+.grade-target { color: v.$text-soft; font-size: 10px; font-weight: 700; }
+.performance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 10px; }
+.performance-card {
+  min-height: 88px;
+  border: 1px solid v.$border;
+  border-radius: 10px;
+  background: v.$surface;
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+}
+.performance-card > span { color: v.$text-soft; font-size: 9px; font-weight: 800; letter-spacing: .04em; }
+.performance-card strong { font-size: 24px; line-height: 1; }
+.performance-card small { color: v.$text-soft; font-size: 9px; line-height: 1.3; }
+
+.grade-progress {
+  height: 8px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: v.$surface-soft;
+  border: 1px solid v.$border;
+}
+.grade-progress i {
+  display: block;
+  width: var(--grade-progress);
+  height: 100%;
+  background: v.$primary;
+  border-radius: inherit;
+}
+
+.grade-status {
+  margin-top: 10px;
+  border: 1px solid v.$border;
+  border-radius: 10px;
+  background: v.$surface-soft;
+  padding: 11px 12px;
+  display: grid;
+  gap: 3px;
+}
+.grade-status strong { font-size: 12px; }
+.grade-status span { color: v.$text-soft; font-size: 10px; line-height: 1.4; }
+.grade-status--imposible,
+.grade-status--no-aprobada {
+  border-color: v.$danger;
+  background: v.$danger-soft;
+}
+.grade-status--imposible strong,
+.grade-status--no-aprobada strong { color: v.$danger; }
+.grade-status--asegurada { background: v.$success-soft; }
+
+.grade-programmed {
+  margin: 8px 0 0;
+  color: v.$text-soft;
+  font-size: 9px;
+  line-height: 1.4;
+}
+.grade-programmed strong { color: v.$text; }
+
+.grade-list { margin-top: 9px; }
+.grade-row {
+  width: 100%;
+  min-height: 58px;
+  border: 1px solid v.$border;
+  border-radius: 9px;
+  background: v.$surface;
+  color: v.$text;
+  padding: 9px 11px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+.grade-row__body { display: grid; gap: 3px; min-width: 0; }
+.grade-row__body strong {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.grade-row__body small { color: v.$text-soft; font-size: 9px; }
+.grade-row__weight {
+  min-width: 42px;
+  text-align: right;
+  color: v.$primary;
+  font-size: 13px;
+  font-weight: 800;
+}
+

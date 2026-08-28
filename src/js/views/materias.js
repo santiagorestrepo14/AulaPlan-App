@@ -2,6 +2,8 @@ import { bottomNav, confirmAction, icon, metaIcon, screenHeader, toast } from '.
 import { emptyState } from '../components/cards.js';
 import { activityStatus, escapeHtml, formatDate, isValidTime, uid } from '../utils.js';
 import { navigate } from '../router.js';
+import { getActiveSemester } from '../academic.js';
+import { bindGrades, renderGrades } from '../grades.js';
 
 const SUBJECT_COLORS = ['#2563EB', '#D97706', '#C2413B', '#7C3AED', '#10B981'];
 
@@ -84,6 +86,9 @@ const days = ['Lun','Mar','Mié','Jue','Vie','Sáb'];
           <label>Profesor
             <input name="docente" maxlength="60" value="${escapeHtml(current?.docente || '')}" placeholder="Dr. Arturo Marcos" />
           </label>
+          <label>Nota mínima para aprobar
+            <input name="notaMinima" type="number" min="0" max="5" step="0.01" value="${escapeHtml(String(current?.notaMinima ?? 3))}" />
+          </label>
           <fieldset>
             <legend>Días de clase</legend>
             <div class="day-chip-row">${days.map(day => `<label class="check-chip"><input type="checkbox" name="dias" value="${day}" ${(current?.dias || []).includes(day) ? 'checked' : ''}><span>${day}</span></label>`).join('')}</div>
@@ -136,10 +141,17 @@ export function bindMateriaForm(root, state, params, persist, back) {
       aula: String(data.get('aula') || '').trim(),
       color: String(data.get('color') || SUBJECT_COLORS[0]),
       notas: String(data.get('notas') || '').trim(),
+      notaMinima: Math.min(5, Math.max(0, Number(data.get('notaMinima') || previous?.notaMinima || 3))),
+      calificaciones: previous?.calificaciones || [],
+      semestreId: previous?.semestreId || getActiveSemester(state)?.id || '',
       fechaCreacion: previous?.fechaCreacion || new Date().toISOString(),
     };
 
-    const conflicts = findScheduleConflicts(state.materias, model, id);
+    const conflicts = findScheduleConflicts(
+      state.materias.filter(materia => materia.semestreId === model.semestreId),
+      model,
+      id,
+    );
 
     if (conflicts.length) {
       const conflictSummary = conflicts
@@ -197,6 +209,8 @@ export function renderMateriaDetalle(state, params) {
           <p>${metaIcon('pin')}${escapeHtml(materia.aula || 'Ubicación sin definir')}</p>
         </section>
 
+        ${renderGrades(materia)}
+
         <section class="detail-section">
           <div class="section-title-row"><h2>Actividades de esta materia</h2><button class="text-action" type="button" data-action="new-activity">Nueva actividad</button></div>
           <div class="stack stack--xs">
@@ -216,9 +230,10 @@ export function renderMateriaDetalle(state, params) {
     </div>`;
 }
 
-export function bindMateriaDetalle(root, state, params) {
+export function bindMateriaDetalle(root, state, params, persist) {
   const id = params.get('id');
   root.querySelector('[data-action="edit-subject"]')?.addEventListener('click', () => navigate('materia-form', { id }));
   root.querySelector('[data-action="new-activity"]')?.addEventListener('click', () => navigate('actividad-form', { materiaId: id }));
   root.querySelectorAll('[data-activity-id]').forEach(el => el.addEventListener('click', () => navigate('actividad-detalle', { id: el.dataset.activityId })));
+  bindGrades(root, state, id, persist);
 }

@@ -24,7 +24,9 @@ El prototipo vigente contiene nueve vistas principales, con referencia clara y o
 
 ## Funcionalidad
 
-- CRUD de materias con profesor, días, horario, aula, color y notas.
+- Organización académica por semestres, con selector de semestre activo e historial local separado.
+- CRUD de materias con profesor, días, horario, aula, color, nota mínima y notas.
+- Seguimiento de calificaciones ponderadas por materia: porcentaje evaluado, promedio actual, acumulado y nota necesaria para aprobar.
 - CRUD de actividades con materia, tipo, fecha/hora, prioridad, descripción y estado.
 - Completar y reabrir actividades.
 - Tipos: tarea, entrega, proyecto, examen/evaluación, exposición y otra.
@@ -78,7 +80,7 @@ El código está **preparado para funcionamiento offline**, pero la prueba físi
 
 ## Persistencia y compatibilidad de datos
 
-El estado actual se guarda en `aulaplan_v5` y contiene materias, actividades y preferencias. Al cargar se normalizan IDs, fechas, horas, valores permitidos y relaciones. Se migran `aulaplan_v1` a `aulaplan_v4` y, cuando existen, los datos de la versión React anterior asociados a la sesión local activa. Las claves antiguas de esa versión se conservan como respaldo; no se migran contraseñas, correos ni sesiones.
+El estado actual se guarda en `aulaplan_v6` y contiene semestres, materias, calificaciones, actividades y preferencias. Al cargar se normalizan IDs, fechas, horas, porcentajes, notas, valores permitidos y relaciones. Los datos `aulaplan_v5` se pueden cargar dentro de un semestre inicial y las claves anteriores se conservan como respaldo local; no se migran contraseñas, correos ni sesiones.
 
 La importación acepta únicamente respaldos JSON identificados como AulaPlan, limita el archivo a 2 MB, normaliza los datos y pide confirmación antes de reemplazar el estado actual.
 

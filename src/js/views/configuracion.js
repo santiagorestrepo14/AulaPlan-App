@@ -121,7 +121,7 @@ export function bindConfiguracion(root, state, persist, replaceState) {
     finally { event.target.value = ''; }
   });
   root.querySelector('[data-action="reset"]')?.addEventListener('click', async () => {
-    if (!await confirmAction(state, '¿Borrar todas las materias, actividades y preferencias guardadas? Esta acción no se puede deshacer.', 'Borrar todos los datos')) return;
+    if (!await confirmAction(state, '¿Borrar todos los semestres, materias, actividades y preferencias guardadas? Esta acción no se puede deshacer.', 'Borrar todos los datos')) return;
     const empty = createEmptyState();
     replaceState(empty);
     applyTheme(empty.preferencias.tema);

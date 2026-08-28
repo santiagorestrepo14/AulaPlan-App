@@ -2,6 +2,7 @@ import { bottomNav, confirmAction, icon, metaIcon, screenHeader, toast } from '.
 import { activityCard, emptyState } from '../components/cards.js';
 import { activityStatus, activityTypeLabel, escapeHtml, formatDate, isValidISODate, isValidTime, longDate, priorityRank, todayISO, uid } from '../utils.js';
 import { navigate } from '../router.js';
+import { semesterSubjects } from '../academic.js';
 
 function sortActivities(items, criterion = 'fecha') {
   const copy = [...items];
@@ -143,7 +144,7 @@ export function bindActividadForm(root, state, params, persist) {
     const fechaHora = String(data.get('fechaHora') || '');
     if (!titulo || !materiaId || !fechaHora.includes('T')) { toast('Completa título, materia y fecha de entrega.'); return; }
     const [fecha, hora = ''] = fechaHora.split('T');
-    if (!state.materias.some(m => m.id === materiaId)) { toast('Selecciona una materia válida.'); return; }
+    if (!semesterSubjects(state).some(m => m.id === materiaId)) { toast('Selecciona una materia válida del semestre activo.'); return; }
     if (!isValidISODate(fecha) || !isValidTime(hora, { allowEmpty: false })) { toast('Selecciona una fecha y hora válidas.'); return; }
     const old = state.actividades.find(a => a.id === id);
     if (id && !old) { toast('La actividad ya no existe.'); navigate('actividades'); return; }

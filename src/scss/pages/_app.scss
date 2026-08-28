@@ -153,3 +153,76 @@
   .filters { grid-template-columns: 1fr; }
   .priority-choice { grid-template-columns: 1fr; }
 }
+
+/* Contexto de semestre */
+.semester-switcher {
+  margin-bottom: 16px;
+  min-height: 58px;
+  border: 1px solid v.$border;
+  border-radius: 12px;
+  background: v.$surface;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 10px;
+}
+.semester-switcher label { min-width: 0; display: grid; gap: 4px; }
+.semester-switcher label > span { color: v.$text-soft; font-size: 9px; font-weight: 800; letter-spacing: .05em; }
+.semester-switcher select {
+  width: 100%;
+  min-height: 34px;
+  border: 0;
+  background: transparent;
+  color: v.$text;
+  font-size: 14px;
+  font-weight: 750;
+  padding: 0 24px 0 0;
+}
+
+
+/* AulaPlan: ajustes finales de inputs y selector de semestre */
+
+/* Quitar flechas de los campos numéricos */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* Selector de semestre */
+.semester-switcher select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid v.$border;
+  border-radius: 8px;
+  background: v.$surface;
+  color: v.$text;
+  padding: 0 32px 0 10px;
+}
+
+.semester-switcher select:focus {
+  outline: 2px solid v.$focus-ring;
+  outline-offset: 1px;
+}
+
+/* Opciones visibles en tema claro */
+.semester-switcher select option {
+  background: #FFFFFF;
+  color: #171717;
+}
+
+/* Opciones visibles en tema oscuro */
+:root[data-theme='dark'] .semester-switcher select {
+  color-scheme: dark;
+}
+
+:root[data-theme='dark'] .semester-switcher select option {
+  background: #1C1C1A;
+  color: #F7F7F5;
+}
