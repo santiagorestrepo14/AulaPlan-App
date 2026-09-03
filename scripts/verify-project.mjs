@@ -147,7 +147,7 @@ if (fs.existsSync(androidVars)) {
   }
   const androidBuild = read('android/app/build.gradle');
   if (!/applicationId\s+["']com\.aulaplan\.app["']/.test(androidBuild)) fail('ANDROID: applicationId no coincide con Capacitor.');
-  if (!/versionCode\s+3\b/.test(androidBuild) || !/versionName\s+["']0\.3\.0["']/.test(androidBuild)) fail('ANDROID: versionCode/versionName deben corresponder a AulaPlan 0.3.0.');
+  if (!/versionCode\s+4\b/.test(androidBuild) || !/versionName\s+["']1\.0\.0["']/.test(androidBuild)) fail('ANDROID: versionCode/versionName deben corresponder a AulaPlan 1.0.0.');
   const androidManifest = read('android/app/src/main/AndroidManifest.xml');
   if (!/android:allowBackup=["']false["']/.test(androidManifest)) fail('ANDROID: las copias automáticas deben quedar desactivadas para datos académicos locales.');
   if (!/android:dataExtractionRules=["']@xml\/data_extraction_rules["']/.test(androidManifest)) fail('ANDROID: falta la política moderna que excluye datos académicos de respaldos del sistema.');
