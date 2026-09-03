@@ -1,18 +1,243 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#171717" />
-    <meta name="description" content="AulaPlan: organizador académico local y sin conexión." />
-    <meta name="color-scheme" content="light dark" />
-    <link rel="icon" href="/aulaplan-icon.svg" type="image/svg+xml" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <title>AulaPlan</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <noscript>AulaPlan necesita JavaScript habilitado para funcionar.</noscript>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Términos y condiciones de AulaPlan">
+  <meta name="color-scheme" content="light dark">
+  <title>Términos y Condiciones | AulaPlan</title>
+
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #666666;
+      --border: #ddddda;
+      --accent: #c2413b;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121212;
+        --surface: #1c1c1a;
+        --text: #f7f7f5;
+        --muted: #b8b8b2;
+        --border: #383834;
+        --accent: #f87171;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(920px, calc(100% - 28px));
+      margin: auto;
+      padding: 40px 0 64px;
+    }
+
+    header,
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1.15;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .brand {
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 22px;
+    }
+  </style>
+</head>
+
+<body>
+<main>
+
+  <header>
+    <div class="brand">AulaPlan</div>
+    <h1>Términos y Condiciones</h1>
+    <p class="muted">
+      Última actualización: 3 de septiembre de 2026 · Versión 1.0.0
+    </p>
+    <p>
+      Estos Términos y Condiciones regulan el uso de AulaPlan,
+      una aplicación de organización académica para gestionar
+      semestres, materias, actividades, calendario y calificaciones.
+    </p>
+  </header>
+
+  <section>
+    <h2>1. Finalidad de AulaPlan</h2>
+    <p>
+      AulaPlan es una herramienta de apoyo académico diseñada para ayudar
+      al usuario a organizar información relacionada con sus estudios,
+      incluyendo materias, horarios, actividades, calificaciones y semestres.
+    </p>
+    <p>
+      AulaPlan no sustituye los sistemas oficiales de instituciones
+      educativas ni garantiza que la información registrada coincida
+      con la información oficial de universidades, colegios o docentes.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. Uso de la aplicación</h2>
+    <p>
+      El usuario se compromete a utilizar AulaPlan de forma lícita y
+      para fines personales, académicos y organizativos.
+    </p>
+    <p>
+      El usuario es responsable de introducir información correcta
+      y mantenerla actualizada.
+    </p>
+  </section>
+
+  <section>
+    <h2>3. Cuentas y acceso</h2>
+    <p>
+      AulaPlan no requiere crear una cuenta de usuario ni iniciar sesión
+      para utilizar sus funciones académicas principales.
+    </p>
+  </section>
+
+  <section>
+    <h2>4. Almacenamiento de información</h2>
+    <p>
+      La información académica registrada en AulaPlan se almacena localmente
+      en el dispositivo del usuario.
+    </p>
+    <p>
+      La aplicación permite exportar e importar respaldos locales.
+      El usuario es responsable de conservar y proteger estos archivos.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. Calificaciones y cálculos</h2>
+    <p>
+      AulaPlan puede calcular promedios, porcentajes evaluados,
+      porcentajes restantes y estimaciones de la nota necesaria
+      para alcanzar una calificación mínima.
+    </p>
+    <p>
+      Estos cálculos son orientativos y dependen de los datos introducidos
+      por el usuario. Deben verificarse frente a las reglas oficiales
+      de evaluación de cada asignatura o institución.
+    </p>
+  </section>
+
+  <section>
+    <h2>6. Disponibilidad</h2>
+    <p>
+      Se procura mantener AulaPlan funcional y disponible, pero no se
+      garantiza que la aplicación esté completamente libre de errores,
+      incompatibilidades o interrupciones.
+    </p>
+  </section>
+
+  <section>
+    <h2>7. Responsabilidad</h2>
+    <p>
+      Los desarrolladores de AulaPlan no se responsabilizan por decisiones
+      académicas tomadas exclusivamente a partir de información introducida
+      por el usuario o cálculos mostrados por la aplicación.
+    </p>
+    <p>
+      Tampoco se responsabilizan por pérdida de información causada por
+      fallos del dispositivo, desinstalaciones, eliminación de datos,
+      problemas del sistema operativo o acciones del usuario.
+    </p>
+  </section>
+
+  <section>
+    <h2>8. Propiedad intelectual</h2>
+    <p>
+      El nombre AulaPlan, su código, interfaz, documentación y demás elementos
+      propios del proyecto pertenecen a sus autores o a quienes legalmente
+      correspondan, salvo componentes de terceros sujetos a sus respectivas
+      licencias.
+    </p>
+  </section>
+
+  <section>
+    <h2>9. Modificaciones</h2>
+    <p>
+      AulaPlan puede recibir nuevas funciones, correcciones y cambios de
+      interfaz. Estos Términos y Condiciones también pueden actualizarse
+      para reflejar cambios técnicos, legales o de distribución.
+    </p>
+  </section>
+
+  <section>
+    <h2>10. Privacidad</h2>
+    <p>
+      El tratamiento de la información se explica en la
+      <a href="./privacy.html">Política de Privacidad de AulaPlan</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>11. Contacto</h2>
+    <p>
+      Para consultas relacionadas con AulaPlan puede utilizarse el correo:
+      <a href="mailto:josue.pino.57@gmail.com">josue.pino.57@gmail.com</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>12. Desarrolladores</h2>
+    <p>
+      AulaPlan es un proyecto académico desarrollado por
+      Santiago Restrepo, Josué Pino y Sebastián Cruz.
+    </p>
+  </section>
+
+  <footer>
+    AulaPlan · Términos y Condiciones · 2026
+  </footer>
+
+</main>
+</body>
 </html>
